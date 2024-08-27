@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.book.info.entity.BookInfo;
+import com.book.info.exception.CustomException;
 import com.book.info.service.BookInfoService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -36,10 +37,24 @@ public class BookInfoController {
 	}
 	
 	@GetMapping("/book-info/{id}")
-	public ResponseEntity<BookInfo> getAllBookInfoById(@PathVariable("id") int id){
-		return new ResponseEntity<BookInfo> ( 
-				bookInfoService.getAllBookInfoById(id), 
-				HttpStatus.OK);
+	public ResponseEntity<Object> getBookInfoById(@PathVariable("id") int id){
+		
+		BookInfo bookInfo = bookInfoService.getAllBookInfoById(id);
+		
+		if(bookInfo != null) {
+			System.out.println("bookInfo : "+bookInfo.getBookName());
+			return new ResponseEntity<Object> ( 
+					bookInfoService.getAllBookInfoById(id), 
+					HttpStatus.OK);
+		}else {
+			System.out.println("bookInfo : Else");
+			CustomException err = new CustomException("Book-Info with ID: "+id+" is not available");
+			return new ResponseEntity<Object> ( 
+					err, 
+					HttpStatus.OK);
+		}
+		
+		
 	}
 	
 	@PostMapping("/book-info")

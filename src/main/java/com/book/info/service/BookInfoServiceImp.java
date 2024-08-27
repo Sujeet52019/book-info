@@ -29,7 +29,7 @@ public class BookInfoServiceImp implements BookInfoService {
 	@Override
 	public BookInfo getAllBookInfoById(int id) {
 		// TODO Auto-generated method stub
-		return bookInfoRepository.findById(id).get();
+		return bookInfoRepository.findById(id).orElse(null);
 	}
 
 	@Override
