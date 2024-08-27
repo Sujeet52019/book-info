@@ -48,7 +48,7 @@ public class BookInfoController {
 					HttpStatus.OK);
 		}else {
 			System.out.println("bookInfo : Else");
-			CustomException err = new CustomException("Book-Info with ID: "+id+" is not available");
+			CustomException err = new CustomException("Book-Info with the ID: "+id+" is not available");
 			return new ResponseEntity<Object> ( 
 					err, 
 					HttpStatus.OK);
